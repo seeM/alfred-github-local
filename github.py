@@ -86,12 +86,7 @@ def get_repos(workspace_dir=WORKSPACE_DIR):
 
 def main(wf):
     query = wf.args[0] if wf.args else None
-    repos = []
-    for d in wf.cached_data("repos", get_repos, max_age=60*60*24):
-        # TODO: Why is url even there, but search_key isn't?
-        d.pop("url")
-        repo = Repository(**d)
-        repos.append(repo)
+    repos = wf.cached_data("repos", get_repos, max_age=60*60*24)
     if query:
         repos = wf.filter(query, repos, lambda x: x.search_key)
     for repo in repos:
