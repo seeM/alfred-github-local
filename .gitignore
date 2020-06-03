@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.alfredversionchecked
+*.tgz
+.mypy_cache/
