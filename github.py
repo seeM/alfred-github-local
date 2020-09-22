@@ -14,6 +14,14 @@ class Repository:
         self.author = author
         self.name = name
 
+    def __hash__(self):
+        return hash((self.author, self.name))
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return (self.author, self.name) == (other.author, other.name)
+        return False
+
     GITHUB_URL = "https://github.com/{}/{}"
 
     @property
@@ -81,7 +89,7 @@ def get_repos(workspace_dir=WORKSPACE_DIR):
             pass
         else:
             repos.append(repo)
-    return repos
+    return list(set(repos))
 
 
 def main(wf):
